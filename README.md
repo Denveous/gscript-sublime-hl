@@ -1,6 +1,6 @@
 # gscript-sublime-hl
 
-`gscript-sublime-hl` is a Sublime Text syntax highlighting configuration for the GScript language, widely used in server and system scripts for the game . The file automatically detects `.gs2`, `.gscript`, `.gscript2`, `.gs`, `.gscript`, and `.gscript2` files and applies syntax highlighting, making it easier to read and edit these scripts.
+`gscript-sublime-hl` is a Sublime Text syntax highlighting configuration for the GScript language, widely used in server and system scripts. The file automatically detects `.gs2`, `.gscript`, `.gscript2`, `.gs`, `.gscript`, and `.gscript2` files and applies syntax highlighting, making it easier to read and edit these scripts.
 
 ## Features
 
