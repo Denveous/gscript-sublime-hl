@@ -1,0 +1,101 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: graalscript
+file_extensions:
+  - gs2
+  - graalscript
+  - gs
+  - gscript
+  - gscript2
+  - graalscript2
+scope: source.graalscript
+
+contexts:
+  main:
+    - include: sql-strings
+    - include: comments
+    - include: strings
+    - include: numbers
+    - include: keywords
+    - include: functions
+    - include: operators
+
+  comments:
+    - match: //.*$
+      scope: comment.line.double-slash.graalscript
+
+    - match: /\*
+      scope: punctuation.definition.comment.begin.graalscript
+      push: block-comment
+
+  block-comment:
+    - meta_scope: comment.block.graalscript
+    - match: \*/
+      scope: punctuation.definition.comment.end.graalscript
+      pop: true
+    - match: ^\s*\*.*$
+      scope: comment.block.graalscript.leading-asterisk
+
+  sql-strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.graalscript
+      push: sql-string-body
+
+  sql-string-body:
+    - meta_scope: string.quoted.double.sql.graalscript
+    - match: '"'
+      scope: punctuation.definition.string.end.graalscript
+      pop: true
+    - match: \b(SELECT|INSERT|UPDATE|DELETE|CREATE|TABLE|FROM|WHERE|VALUES|SET|INTO|AND|OR|NOT|NULL|IS|AS|ON|JOIN|LEFT|RIGHT|INNER|OUTER|GROUP|BY|ORDER|LIMIT|OFFSET|DISTINCT|COUNT|AVG|SUM|MIN|MAX|PRIMARY|KEY|DEFAULT|INT|TEXT|NOT)\b
+      scope: keyword.other.sql.graalscript
+    - match: \\.
+      scope: constant.character.escape.graalscript
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.graalscript
+      push: string-body
+
+  string-body:
+    - meta_scope: string.quoted.double.graalscript
+    - match: '"'
+      scope: punctuation.definition.string.end.graalscript
+      pop: true
+    - match: \\.
+      scope: constant.character.escape.graalscript
+
+  numbers:
+    - match: \b([0-9]+|0[xX][0-9a-fA-F]+)\b
+      scope: constant.numeric.graalscript
+
+  keywords:
+    - match: \b(break|case|continue|default|do|else|elseif|for|if|in|return|switch|while|with)\b
+      scope: keyword.control.graalscript
+
+    - match: \b(join|leave)\b
+      scope: storage.type.graalscript
+
+    - match: \b(public|private|const|enum|function)\b
+      scope: storage.modifier.graalscript
+
+    - match: \b(new|datablock)\b
+      scope: keyword.other.graalscript
+
+    - match: \b(true|false|nil|null|NULL|pi|timevar2)\b
+      scope: constant.language.graalscript
+
+    - match: \b(this|thiso|temp|server|serverr|client|clientr|player|name)\b
+      scope: variable.language.graalscript
+
+  functions:
+    - match: \b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()
+      scope: entity.name.function.graalscript
+
+  operators:
+    - match: '[-~^@/%|=+*!?&<>]'
+      scope: keyword.operator.graalscript
+    - match: '\[|\]'
+      scope: keyword.operator.array.graalscript
+    - match: '[{}();:,.]'
+      scope: punctuation.graalscript
