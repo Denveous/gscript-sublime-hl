@@ -13,7 +13,6 @@ scope: source.gscript
 
 contexts:
   main:
-    - include: section-headers
     - include: sql-strings
     - include: comments
     - include: strings
@@ -22,12 +21,6 @@ contexts:
     - include: functions
     - include: operators
 
-  section-headers:
-    - match: ^\s*\[([^\]]+)\]
-      scope: entity.name.section.gscript
-      captures:
-        1: entity.name.section.bracket.gscript
-
   comments:
     - match: ^\s*#.*$
       scope: comment.line.hash.gscript
@@ -35,7 +28,9 @@ contexts:
     - match: //.*$
       scope: comment.line.double-slash.gscript
 
-    - match: /\*
+    # Block comment - only match /* when preceded by whitespace or at line start
+    # This prevents "levels/*" from triggering block comments
+    - match: (?:^|\s)/\*
       scope: punctuation.definition.comment.begin.gscript
       push: block-comment
 
@@ -83,7 +78,7 @@ contexts:
     - match: \b(break|case|continue|default|do|else|elseif|for|if|in|return|switch|while|with)\b
       scope: keyword.control.gscript
 
-    - match: \b(import)\b
+    - match: \b(join|leave)\b
       scope: storage.type.gscript
 
     - match: \b(public|private|const|enum|function)\b
